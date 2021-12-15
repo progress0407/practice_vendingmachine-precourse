@@ -1,7 +1,6 @@
 package vendingmachine.repository;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,5 +18,23 @@ class CoinsTest {
 			.hasMessageContaining("[ERROR] ");
 	}
 
+	@ParameterizedTest
+	@ValueSource(strings = {"[콜라,1000,10],[사이다,500,50];", "[콜라,1000,10],[사이다,500,50"})
+	void 상품명_입력_예외(String input) {
+		assertThatThrownBy(()->{
+			InputValidator.validateItems(input);
+		})
+			.isInstanceOf(IllegalArgumentException.class)
+			.hasMessageContaining("[ERROR] ");;
+	}
 
+	@ParameterizedTest
+	@ValueSource(strings = {"[콜라,1000,10];", "콜라,1000,10]", "[콜라,1000]"})
+	void 상품명_입력_예외2(String input) {
+		assertThatThrownBy(()->{
+			InputValidator.validateItem(input);
+		})
+			.isInstanceOf(IllegalArgumentException.class)
+			.hasMessageContaining("[ERROR] ");;
+	}
 }
