@@ -29,7 +29,7 @@ public class InputValidator {
 	}
 
 	public static void validateItems(String input) {
-		String regExp = "^\\[[\\[\\]\\w가-힣,;\\d]*\\]$";
+		String regExp = "^\\[[\\w가-힣,;\\d\\[\\]]*\\]$";
 		boolean matches = Pattern.matches(regExp, input);
 		if (!matches) {
 			throw new IllegalArgumentException(INVALID_INPUT_ITEMS);
@@ -37,10 +37,15 @@ public class InputValidator {
 	}
 
 	public static void validateItem(String input) {
-		String regExp = "^\\[[\\w가-힣]*,\\d+,\\d+\\]$";
+		String regExp = "^[가-힣\\w,]*$";
 		boolean matches = Pattern.matches(regExp, input);
 		if (!matches) {
 			throw new IllegalArgumentException(INVALID_INPUT_ITEMS);
 		}
+	}
+
+	public static void validateMoneyToBuy(String input) {
+		isDigit(input);
+		isMultipleOfTen(input);
 	}
 }

@@ -13,6 +13,7 @@ public class InputView {
 	public static final String INPUT_ITEMS = "상품명과 가격, 수량을 입력해 주세요.";
 	public static final String DELIMITER_ITEMS = ";";
 	public static final String DELIMITER_ITEM = ",";
+	public static final String INPUT_MONEY_TO_BUY = "투입 금액을 입력해 주세요.";
 
 	public static int getMachineMoney() {
 		while (true) {
@@ -58,5 +59,18 @@ public class InputView {
 		int price = Integer.parseInt(strings[1]);
 		int count = Integer.parseInt(strings[2]);
 		return new Item(name, price, count);
+	}
+
+	public static int getMoneyToBuy() {
+		while (true) {
+			try {
+				System.out.println(INPUT_MONEY_TO_BUY);
+				String input = Console.readLine();
+				InputValidator.validateMoneyToBuy(input);
+				return Integer.parseInt(input);
+			} catch (NumberFormatException e) {
+				System.out.println(e.getMessage());
+			}
+		}
 	}
 }
