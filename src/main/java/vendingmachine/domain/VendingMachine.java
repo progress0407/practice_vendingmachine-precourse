@@ -3,8 +3,6 @@ package vendingmachine.domain;
 import java.util.Map;
 import java.util.Set;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
-
 import vendingmachine.repository.Buying;
 import vendingmachine.repository.Coins;
 import vendingmachine.repository.Items;
@@ -20,7 +18,7 @@ public class VendingMachine {
 	public void generateMachineCoins() {
 		int machineMoney = InputView.getMachineMoney();
 		coins = new Coins(machineMoney);
-		OutputView.printCoins(coins);
+		OutputView.printMachineCoins(coins);
 	}
 
 	public void generateItem() {
@@ -39,5 +37,6 @@ public class VendingMachine {
 		int remainingMoney = buying.buyUntilNoMoney();
 		Map<Coin, Integer> changes = buying.getChanges();
 		OutputView.printChanges(changes, remainingMoney);
+		OutputView.printItems(items);
 	}
 }

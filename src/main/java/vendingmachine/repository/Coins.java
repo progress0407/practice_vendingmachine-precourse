@@ -1,15 +1,14 @@
 package vendingmachine.repository;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import camp.nextstep.edu.missionutils.Randoms;
 import vendingmachine.domain.Coin;
 
 public class Coins {
-	private Map<Coin, Integer> coins = new HashMap<>();
+	private Map<Coin, Integer> coins = new LinkedHashMap<>();
 
 	{
 		coins.put(Coin.COIN_500, 0);
@@ -45,5 +44,26 @@ public class Coins {
 	private void addCount(Coin coin) {
 		Integer count = coins.get(coin);
 		coins.replace(coin, count + 1);
+	}
+
+	public int getTotalMoney() {
+		int total = 0;
+		for (Map.Entry<Coin, Integer> entry : coins.entrySet()) {
+			int subTotal = getSubTotal(entry);
+			total += subTotal;
+		}
+		return total;
+	}
+
+	private int getSubTotal(Map.Entry<Coin, Integer> entry) {
+		int coinAmount = entry.getKey().getAmount();
+		Integer coinCount = entry.getValue();
+		return coinAmount * coinCount;
+	}
+
+	public int returnMaximumCount(Coin coin, int money) {
+		int currentCoinCount = coins.get(coin);
+		int coinCountToReturn = money / coin.getAmount() ;
+		return Math.min(currentCoinCount, coinCountToReturn);
 	}
 }

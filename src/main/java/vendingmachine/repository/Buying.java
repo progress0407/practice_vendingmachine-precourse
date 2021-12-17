@@ -42,6 +42,7 @@ public class Buying {
 		for (Coin coin : Coin.values()) {
 			int changesCount = coins.returnMaximumCount(coin, money);
 			remainingCoins.put(coin, changesCount);
+			money -= coin.getAmount() * changesCount;
 		}
 		return remainingCoins;
 	}

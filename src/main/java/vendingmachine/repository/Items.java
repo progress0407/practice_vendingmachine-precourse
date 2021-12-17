@@ -12,6 +12,10 @@ public class Items {
 		this.items = items;
 	}
 
+	public Set<Item> get() {
+		return items;
+	}
+
 	public int getMinimumPrice() {
 		return items.stream()
 			.mapToInt(Item::getPrice)

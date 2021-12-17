@@ -15,9 +15,4 @@ public class CoinInputInputValidator extends InputValidator {
 		isMultipleOfTen(input);
 	}
 
-	public static void validateItemName(String input) {
-		isDigit(input);
-		isMultipleOfTen(input);
-	}
-
 }

@@ -4,6 +4,7 @@ import static java.lang.System.*;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 import camp.nextstep.edu.missionutils.Console;
 import vendingmachine.domain.Item;
@@ -50,7 +51,7 @@ public class InputView {
 	private static Set<Item> getItems(String input) {
 		input = input.replaceAll("[\\[\\]]", "");
 		String[] strings = input.split(DELIMITER_ITEMS);
-		Set<Item> items = new HashSet<>();
+		Set<Item> items = new TreeSet<>();
 		for (String string : strings) {
 			ItemInputInputValidator.validateItem(string);
 			Item item = getItem(string);
