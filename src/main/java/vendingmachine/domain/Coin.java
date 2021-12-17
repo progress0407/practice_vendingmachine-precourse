@@ -20,6 +20,13 @@ public enum Coin {
         return amount;
     }
 
+    public static Coin of(int amount) {
+        return Arrays.stream(Coin.values())
+            .filter(coin -> coin.getAmount() == amount)
+            .findAny()
+            .get();
+    }
+
     public static List<Integer> getAmountList() {
         return Arrays.stream(Coin.values())
             .map(Coin::getAmount)

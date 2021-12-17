@@ -11,12 +11,39 @@ import vendingmachine.domain.Coin;
 public class Coins {
 	private Map<Coin, Integer> coins = new HashMap<>();
 
-	public static Coins add(int machineMoney) {
+	{
+		coins.put(Coin.COIN_500, 0);
+		coins.put(Coin.COIN_100, 0);
+		coins.put(Coin.COIN_50, 0);
+		coins.put(Coin.COIN_10, 0);
+	}
+
+	public Coins(int machineMoney) {
 		while (machineMoney != 0) {
-			int randomAmount = Randoms.pickNumberInList(Coin.getAmountList());
-			machineMoney -= randomAmount;
-
+			Coin randomCoin = getRandomCoin();
+			if (canSubtract(randomCoin, machineMoney)) {
+				machineMoney -= randomCoin.getAmount();
+				addCount(randomCoin);
+			}
 		}
+	}
 
+	public Map<Coin, Integer> get() {
+		return coins;
+	}
+
+	private boolean canSubtract(Coin randomCoin, int machineMoney) {
+		return machineMoney - randomCoin.getAmount() >= 0;
+	}
+
+	private Coin getRandomCoin() {
+		int randomAmount = Randoms.pickNumberInList(Coin.getAmountList());
+		Coin coin = Coin.of(randomAmount);
+		return coin;
+	}
+
+	private void addCount(Coin coin) {
+		Integer count = coins.get(coin);
+		coins.replace(coin, count + 1);
 	}
 }

@@ -13,7 +13,6 @@ public class VendingMachineController {
 		vendingMachine.processMachineMoney();
 		vendingMachine.processItem();
 
-
 		int moneyToBuy = InputView.getMoneyToBuy();
 	}
 }
