@@ -6,6 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import vendingmachine.util.CoinInputInputValidator;
+import vendingmachine.util.ItemInputInputValidator;
 
 class CoinsTest {
 
@@ -23,7 +24,7 @@ class CoinsTest {
 	@ValueSource(strings = {"[콜라,1000,10],[사이다,500,50];", "[콜라,1000,10],[사이다,500,50"})
 	void 상품명_입력_예외(String input) {
 		assertThatThrownBy(()->{
-			CoinInputInputValidator.validateItems(input);
+			ItemInputInputValidator.validateItems(input);
 		})
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessageContaining(ERROR_PREFIX_MESSAGE);;
@@ -33,7 +34,7 @@ class CoinsTest {
 	@ValueSource(strings = {"[콜라,1000,10];", "콜라,1000,10]", "[콜라,1000]"})
 	void 상품명_입력_예외2(String input) {
 		assertThatThrownBy(()->{
-			CoinInputInputValidator.validateItem(input);
+			ItemInputInputValidator.validateItem(input);
 		})
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessageContaining(ERROR_PREFIX_MESSAGE);;

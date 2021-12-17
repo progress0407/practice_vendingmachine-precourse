@@ -2,7 +2,7 @@ package vendingmachine.domain;
 
 import java.util.Objects;
 
-public class Item {
+public class Item implements Comparable<Item> {
 
 	private String name;
 	private int price;
@@ -33,12 +33,12 @@ public class Item {
 		if (!(o instanceof Item))
 			return false;
 		Item item = (Item)o;
-		return Objects.equals(name, item.name);
+		return getPrice() == item.getPrice() && count == item.count && Objects.equals(name, item.name);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(name);
+		return Objects.hash(name, getPrice(), count);
 	}
 
 	@Override
@@ -48,5 +48,10 @@ public class Item {
 			", price=" + price +
 			", count=" + count +
 			'}';
+	}
+
+	@Override
+	public int compareTo(Item o) {
+		return this.name.compareTo(o.name);
 	}
 }
