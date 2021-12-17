@@ -1,11 +1,15 @@
 package vendingmachine.view;
 
+import static java.lang.System.*;
+
 import java.util.HashSet;
 import java.util.Set;
 
 import camp.nextstep.edu.missionutils.Console;
 import vendingmachine.domain.Item;
-import vendingmachine.util.InputValidator;
+import vendingmachine.repository.Items;
+import vendingmachine.util.CoinInputInputValidator;
+import vendingmachine.util.ItemInputInputValidator;
 
 public class InputView {
 
@@ -14,16 +18,18 @@ public class InputView {
 	public static final String DELIMITER_ITEMS = ";";
 	public static final String DELIMITER_ITEM = ",";
 	public static final String INPUT_MONEY_TO_BUY = "투입 금액을 입력해 주세요.";
+	public static final String INFO_CURRENT_MONEY_TO_BUY = "투입 금액: %s원\n";
+	public static final String INPUT_ITEM_NAME_TO_BUY = "구매할 상품명을 입력해 주세요.";
 
 	public static int getMachineMoney() {
 		while (true) {
 			try {
-				System.out.println(INPUT_MACHINE_MONEY);
+				out.println(INPUT_MACHINE_MONEY);
 				String input = Console.readLine();
-				InputValidator.validateMachineMoney(input);
+				CoinInputInputValidator.validateMachineMoney(input);
 				return Integer.parseInt(input);
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
+				out.println(e.getMessage());
 			}
 		}
 	}
@@ -31,12 +37,12 @@ public class InputView {
 	public static Set<Item> getItems() {
 		while (true) {
 			try {
-				System.out.println(INPUT_ITEMS);
+				out.println(INPUT_ITEMS);
 				String input = Console.readLine();
-				InputValidator.validateItems(input);
+				ItemInputInputValidator.validateItems(input);
 				return getItems(input);
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
+				out.println(e.getMessage());
 			}
 		}
 	}
@@ -46,7 +52,7 @@ public class InputView {
 		String[] strings = input.split(DELIMITER_ITEMS);
 		Set<Item> items = new HashSet<>();
 		for (String string : strings) {
-			InputValidator.validateItem(string);
+			ItemInputInputValidator.validateItem(string);
 			Item item = getItem(string);
 			items.add(item);
 		}
@@ -64,12 +70,31 @@ public class InputView {
 	public static int getMoneyToBuy() {
 		while (true) {
 			try {
-				System.out.println(INPUT_MONEY_TO_BUY);
+				out.println(INPUT_MONEY_TO_BUY);
 				String input = Console.readLine();
-				InputValidator.validateMoneyToBuy(input);
+				CoinInputInputValidator.validateMoneyToBuy(input);
 				return Integer.parseInt(input);
-			} catch (NumberFormatException e) {
-				System.out.println(e.getMessage());
+			} catch (Exception e) {
+				out.println(e.getMessage());
+			}
+		}
+	}
+
+	/**
+	 * 투입 금액: 3000원
+	 * 구매할 상품명을 입력해 주세요.
+	 * 콜라
+	 */
+	public static Item getItemToBuy(Items items, int moneyToBuy) {
+		while (true) {
+			try {
+				out.printf(INFO_CURRENT_MONEY_TO_BUY, moneyToBuy);
+				out.println(INPUT_ITEM_NAME_TO_BUY);
+				String input = Console.readLine();
+				ItemInputInputValidator.validateItemExist(items, input);
+				return items.findItemByName(input);
+			} catch (Exception e) {
+				out.println(e.getMessage());
 			}
 		}
 	}

@@ -1,51 +1,30 @@
 package vendingmachine.util;
 
-import java.util.regex.Pattern;
-
 public class InputValidator {
 
-	public static final String INVALID_INPUT_MONEY = "[ERROR] 숫자를 입력해야 합니다.";
-	public static final String INVALID_INPUT_TEN_OF_MULTIPLE = "[ERROR] 10의 배수를 입력해야 합니다.";
-	public static final String INVALID_INPUT_ITEMS = "[ERROR] 상품 입력이 적절하지 못합니다.";
+	public static final String ERROR_PREFIX = "[ERROR] ";
+	public static final String INVALID_INPUT_MONEY = ERROR_PREFIX + "숫자를 입력해야 합니다.";
+	public static final String INVALID_INPUT_TEN_OF_MULTIPLE = ERROR_PREFIX + "10의 배수를 입력해야 합니다.";
 
-	public static void validateMachineMoney(String input) {
-		isDigit(input);
-		isMultipleOfTen(input);
+	protected static void isPositive(String input) {
+		int inputInt = Integer.parseInt(input);
+		if (inputInt <= 0) {
+			throw new IllegalArgumentException("");
+		}
 	}
 
-	private static void isMultipleOfTen(String input) {
+	protected static void isMultipleOfTen(String input) {
 		int inputInt = Integer.parseInt(input);
 		if (inputInt % 10 != 0) {
 			throw new IllegalArgumentException(INVALID_INPUT_TEN_OF_MULTIPLE);
 		}
 	}
 
-	private static void isDigit(String input) {
+	protected static void isDigit(String input) {
 		try {
 			Integer.parseInt(input);
 		} catch (NumberFormatException e) {
 			throw new IllegalArgumentException(INVALID_INPUT_MONEY);
 		}
-	}
-
-	public static void validateItems(String input) {
-		String regExp = "^\\[[\\w가-힣,;\\d\\[\\]]*\\]$";
-		boolean matches = Pattern.matches(regExp, input);
-		if (!matches) {
-			throw new IllegalArgumentException(INVALID_INPUT_ITEMS);
-		}
-	}
-
-	public static void validateItem(String input) {
-		String regExp = "^[가-힣\\w,]*$";
-		boolean matches = Pattern.matches(regExp, input);
-		if (!matches) {
-			throw new IllegalArgumentException(INVALID_INPUT_ITEMS);
-		}
-	}
-
-	public static void validateMoneyToBuy(String input) {
-		isDigit(input);
-		isMultipleOfTen(input);
 	}
 }
