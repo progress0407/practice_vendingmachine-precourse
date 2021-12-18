@@ -1,7 +1,11 @@
 package vendingmachine;
 
+import vendingmachine.repository.CoinRepository;
+import vendingmachine.strategy.coin.ConsoleCoinInputStrategy;
+
 public class Application {
     public static void main(String[] args) {
-        // TODO: 프로그램 구현
+        CoinRepository.setCoinInputStrategy(new ConsoleCoinInputStrategy());
+        CoinRepository.add();
     }
 }
